@@ -37,15 +37,14 @@ jobs:
       uses: actions/checkout@master
     - name: Checkout submodules
       run: git submodule update --init --recursive
-    - name: Build using HEMTT
-      uses: arma-actions/hemtt@master
-      with:
-        command: build --release --ci
+    - uses: gruppe-adler/action-release-with-hemtt@60f7195e5240289fecd07c29cc5ec8fd92ad2159
+      name: 'Build Mod with HEMTT'
+      id: build
     - name: Upload Artifact
       uses: actions/upload-artifact@v2-preview
       with:
         name: taskforce47_client_mod
-        path: releases/taskforce47_client_mod*.zip
+        path: ${{ steps.build.outputs.release_path }}
 
   job_release:
     runs-on: windows-latest
