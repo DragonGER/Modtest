@@ -3,7 +3,6 @@ name: Arma
 on:
   push:
   pull_request:
-  release:
 
 jobs:
   validate:
@@ -45,6 +44,30 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2-preview
       with:
-        name: tf47_mod-${{ github.sha }}-nobin
+        name: taskforce47-client-mod
         path: releases/tf47_mod_*.zip
 
+   job_release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [build]
+    steps:
+      # Download the build mod
+      - name: Download latest build
+        uses: actions/download-artifact@v2
+        with:
+          name: taskforce47-client-mod
+
+      # zip it
+      - uses: papeloto/action-zip@v1
+        with:
+          files: \@taskforce47-client-mod/
+          dest: \@taskforce47-client-mod.zip
+
+      # release it
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: true
+          files: |
+            \@taskforce47-client-mod.zip
