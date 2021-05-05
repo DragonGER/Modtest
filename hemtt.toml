@@ -1,4 +1,4 @@
-name = "TF47 Mod"
+name = "TF47 client mod"
 modname = "taskforce47_client_mod"
 prefix = "TF47"
 author = "TF47 Development Team"
@@ -11,12 +11,9 @@ include = [
     "./include"
 ]
 
-key_name = "{{prefix}}_{{version}}"
-authority = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
+key_name = "{{prefix}}-{{version}}"
+authority = "{{version}}"
 
-releasebuild = [
-    "@zip tf47_mod_{{semver.major}}.{{semver.minor}}.{{semver.patch}}"
-]
+releasebuild = []
 
-[header_exts]
-version= "{{git \"id 8\"}}"
+show_output = true
