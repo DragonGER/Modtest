@@ -2,9 +2,8 @@ name: Arma
 
 on:
   push:
-    branches:
-    - master
   pull_request:
+  release:
 
 jobs:
   validate:
@@ -46,5 +45,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2-preview
       with:
-        name: tf47-mod-${{ github.sha }}-nobin
-        path: releases/tf47-mod_*.zip
+        name: tf47_mod-${{ github.sha }}-nobin
+        path: releases/tf47_mod_*.zip
+
